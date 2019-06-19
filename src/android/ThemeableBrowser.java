@@ -779,10 +779,12 @@ public class ThemeableBrowser extends CordovaPlugin {
                     // For Android 5.0+
                     public boolean onShowFileChooser (WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams)
                     {
+                        // CHeck Android Version && Permission
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
                                 ( cordova.getActivity().checkSelfPermission( Manifest.permission.WRITE_EXTERNAL_STORAGE ) != PackageManager.PERMISSION_GRANTED ||
                                     cordova.getActivity().checkSelfPermission( Manifest.permission.READ_EXTERNAL_STORAGE ) != PackageManager.PERMISSION_GRANTED )) {
                             cordova.getActivity().requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                            return false;
                         }
 
                         LOG.d(LOG_TAG, "File CHooser 5.0+");
